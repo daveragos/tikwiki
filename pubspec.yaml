@@ -1,0 +1,33 @@
+name: tikwiki
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.3.1
+  go_router: ^17.2.3
+  path_provider: ^2.1.5
+
+  # Local Monorepo Packages
+  wikipedia_api:
+    path: ./packages/wikipedia_api
+  tikwiki_algo:
+    path: ./packages/tikwiki_algo
+
+  # Third-Party Backend Ecosystem
+  firebase_core: ^4.9.0
+  cloud_firestore: ^6.4.1
+  firebase_auth: ^6.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
