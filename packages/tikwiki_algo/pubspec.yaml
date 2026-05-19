@@ -1,5 +1,5 @@
 name: tikwiki_algo
-description: A starting point for Dart libraries or applications.
+description: Feed orchestration, scoring, and diversity ranking for Tikwiki.
 version: 1.0.0
 # repository: https://github.com/my_org/my_repo
 
@@ -8,7 +8,6 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  # path: ^1.9.0
 
 dev_dependencies:
   lints: ^6.0.0
