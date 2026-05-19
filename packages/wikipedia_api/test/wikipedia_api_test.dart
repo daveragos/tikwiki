@@ -15,8 +15,8 @@ void main() {
         'thumbnail': {
           'source': 'https://upload.wikimedia.org/image.jpg',
           'width': 320,
-          'height': 240
-        }
+          'height': 240,
+        },
       };
 
       final summary = WikiSummary.fromJson(json, categoryHint: 'Physics');
@@ -56,7 +56,10 @@ void main() {
       expect(content.id, '998877');
       expect(content.title, 'Parsed HTML Title');
       expect(content.rawHtmlBody, html);
-      expect(content.mobileUrl, 'https://en.m.wikipedia.org/wiki/Original_Title');
+      expect(
+        content.mobileUrl,
+        'https://en.m.wikipedia.org/wiki/Original_Title',
+      );
     });
 
     test('WikiSearchResult.fromJson parses correctly', () {
@@ -64,9 +67,7 @@ void main() {
         'id': 123,
         'title': 'Search Title',
         'description': 'Search description snippet',
-        'thumbnail': {
-          'url': '//upload.wikimedia.org/image_small.jpg'
-        }
+        'thumbnail': {'url': '//upload.wikimedia.org/image_small.jpg'},
       };
 
       final result = WikiSearchResult.fromJson(json);
@@ -74,7 +75,10 @@ void main() {
       expect(result.pageId, 123);
       expect(result.title, 'Search Title');
       expect(result.descriptionSnippet, 'Search description snippet');
-      expect(result.tinyThumbnailUrl, 'https://upload.wikimedia.org/image_small.jpg');
+      expect(
+        result.tinyThumbnailUrl,
+        'https://upload.wikimedia.org/image_small.jpg',
+      );
 
       final serialized = result.toJson();
       final roundtrip = WikiSearchResult.fromJson(serialized);
@@ -84,7 +88,7 @@ void main() {
     test('WikiCategoryBundle parses and validates equality', () {
       final json = {
         'categoryName': 'Space',
-        'associatedTitles': ['Mars', 'Venus', 'Earth']
+        'associatedTitles': ['Mars', 'Venus', 'Earth'],
       };
 
       final bundle = WikiCategoryBundle.fromJson(json);
@@ -102,7 +106,10 @@ void main() {
       var callCount = 0;
       final mockHttpClient = MockClient((request) async {
         callCount++;
-        expect(request.url.toString(), 'https://en.wikipedia.org/api/rest_v1/page/random/summary');
+        expect(
+          request.url.toString(),
+          'https://en.wikipedia.org/api/rest_v1/page/random/summary',
+        );
         expect(request.headers['User-Agent'], contains('TikWikiClient'));
         return http.Response(
           jsonEncode({
@@ -127,10 +134,12 @@ void main() {
 
     test('fetchArticleContent retrieves and parses HTML body', () async {
       final mockHttpClient = MockClient((request) async {
-        expect(request.url.toString(), 'https://en.wikipedia.org/api/rest_v1/page/html/Quantum_entanglement');
+        expect(
+          request.url.toString(),
+          'https://en.wikipedia.org/api/rest_v1/page/html/Quantum_entanglement',
+        );
         expect(request.headers['Accept'], 'text/html; charset=utf-8');
-        return http.Response(
-          '''
+        return http.Response('''
 <html>
 <head>
   <meta property="mw:pageId" content="25336"/>
@@ -138,9 +147,7 @@ void main() {
 </head>
 <body>Content</body>
 </html>
-''',
-          200,
-        );
+''', 200);
       });
 
       final client = WikipediaClient(client: mockHttpClient);
@@ -148,13 +155,19 @@ void main() {
 
       expect(content.id, '25336');
       expect(content.title, 'Quantum entanglement');
-      expect(content.mobileUrl, 'https://en.m.wikipedia.org/wiki/Quantum_entanglement');
+      expect(
+        content.mobileUrl,
+        'https://en.m.wikipedia.org/wiki/Quantum_entanglement',
+      );
       expect(content.rawHtmlBody, contains('<body>Content</body>'));
     });
 
     test('querySearchAutocomplete retrieves and maps results', () async {
       final mockHttpClient = MockClient((request) async {
-        expect(request.url.toString(), 'https://en.wikipedia.org/w/rest.php/v1/search/title?q=Quantum');
+        expect(
+          request.url.toString(),
+          'https://en.wikipedia.org/w/rest.php/v1/search/title?q=Quantum',
+        );
         return http.Response(
           jsonEncode({
             'pages': [
@@ -162,9 +175,9 @@ void main() {
                 'id': 25280,
                 'title': 'Quantum teleportation',
                 'description': 'Physical phenomenon',
-                'thumbnail': {'url': '//upload.wikimedia.org/thumb.jpg'}
-              }
-            ]
+                'thumbnail': {'url': '//upload.wikimedia.org/thumb.jpg'},
+              },
+            ],
           }),
           200,
         );
@@ -177,40 +190,49 @@ void main() {
       expect(results[0].pageId, 25280);
       expect(results[0].title, 'Quantum teleportation');
       expect(results[0].descriptionSnippet, 'Physical phenomenon');
-      expect(results[0].tinyThumbnailUrl, 'https://upload.wikimedia.org/thumb.jpg');
+      expect(
+        results[0].tinyThumbnailUrl,
+        'https://upload.wikimedia.org/thumb.jpg',
+      );
     });
 
-    test('fetchCategoryFeed queries action API with morelike parameter', () async {
-      final mockHttpClient = MockClient((request) async {
-        expect(request.url.toString(), contains('action=query'));
-        expect(request.url.toString(), contains('gsrsearch=morelike:Quantum_entanglement'));
-        return http.Response(
-          jsonEncode({
-            'query': {
-              'pages': {
-                '3423431': {
-                  'pageid': 3423431,
-                  'title': 'LOCC',
-                  'displaytitle': 'LOCC Title',
-                  'extract': 'LOCC extract details',
-                  'thumbnail': {'source': 'https://example.com/locc.png'}
-                }
-              }
-            }
-          }),
-          200,
-        );
-      });
+    test(
+      'fetchCategoryFeed queries action API with morelike parameter',
+      () async {
+        final mockHttpClient = MockClient((request) async {
+          expect(request.url.toString(), contains('action=query'));
+          expect(
+            request.url.toString(),
+            contains('gsrsearch=morelike:Quantum_entanglement'),
+          );
+          return http.Response(
+            jsonEncode({
+              'query': {
+                'pages': {
+                  '3423431': {
+                    'pageid': 3423431,
+                    'title': 'LOCC',
+                    'displaytitle': 'LOCC Title',
+                    'extract': 'LOCC extract details',
+                    'thumbnail': {'source': 'https://example.com/locc.png'},
+                  },
+                },
+              },
+            }),
+            200,
+          );
+        });
 
-      final client = WikipediaClient(client: mockHttpClient);
-      final results = await client.fetchCategoryFeed('Quantum_entanglement');
+        final client = WikipediaClient(client: mockHttpClient);
+        final results = await client.fetchCategoryFeed('Quantum_entanglement');
 
-      expect(results.length, 1);
-      expect(results[0].id, '3423431');
-      expect(results[0].title, 'LOCC');
-      expect(results[0].extract, 'LOCC extract details');
-      expect(results[0].categoryHint, 'Quantum_entanglement');
-    });
+        expect(results.length, 1);
+        expect(results[0].id, '3423431');
+        expect(results[0].title, 'LOCC');
+        expect(results[0].extract, 'LOCC extract details');
+        expect(results[0].categoryHint, 'Quantum_entanglement');
+      },
+    );
 
     test('Exception is thrown when HTTP response is not 200', () async {
       final mockHttpClient = MockClient((request) async {
@@ -221,7 +243,13 @@ void main() {
 
       expect(
         () => client.fetchArticleContent('Quantum'),
-        throwsA(isA<WikipediaApiException>().having((e) => e.statusCode, 'statusCode', 500)),
+        throwsA(
+          isA<WikipediaApiException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            500,
+          ),
+        ),
       );
     });
   });

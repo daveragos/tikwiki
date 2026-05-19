@@ -15,7 +15,10 @@ class WikiSummary {
     this.categoryHint,
   });
 
-  factory WikiSummary.fromJson(Map<String, dynamic> json, {String? categoryHint}) {
+  factory WikiSummary.fromJson(
+    Map<String, dynamic> json, {
+    String? categoryHint,
+  }) {
     final pageIdVal = json['pageid'] ?? json['id'];
     final String id = pageIdVal?.toString() ?? '';
 
@@ -45,10 +48,7 @@ class WikiSummary {
       'title': title,
       'displaytitle': displayTitle,
       'extract': extract,
-      if (thumbnailUrl != null)
-        'thumbnail': {
-          'source': thumbnailUrl,
-        },
+      if (thumbnailUrl != null) 'thumbnail': {'source': thumbnailUrl},
       if (categoryHint != null) 'categoryHint': categoryHint,
     };
   }

@@ -15,7 +15,9 @@ void main() async {
     for (var i = 0; i < randomBatch.length; i++) {
       final article = randomBatch[i];
       print('   [$i] Title: "${article.title}" (ID: ${article.id})');
-      print('       Extract: "${article.extract.substring(0, article.extract.length > 80 ? 80 : article.extract.length)}..."');
+      print(
+        '       Extract: "${article.extract.substring(0, article.extract.length > 80 ? 80 : article.extract.length)}..."',
+      );
       if (article.thumbnailUrl != null) {
         print('       Thumbnail: ${article.thumbnailUrl}');
       }
@@ -42,9 +44,15 @@ void main() async {
     // 3. Testing Autocomplete Search
     const searchWord = 'Quantum';
     print('3. Querying search autocomplete for "$searchWord"...');
-    final autocompleteResults = await client.querySearchAutocomplete(searchWord);
+    final autocompleteResults = await client.querySearchAutocomplete(
+      searchWord,
+    );
     print('🔍 Found ${autocompleteResults.length} matches:');
-    for (var i = 0; i < (autocompleteResults.length > 5 ? 5 : autocompleteResults.length); i++) {
+    for (
+      var i = 0;
+      i < (autocompleteResults.length > 5 ? 5 : autocompleteResults.length);
+      i++
+    ) {
       final result = autocompleteResults[i];
       print('   [$i] ${result.title} (Page ID: ${result.pageId})');
       if (result.descriptionSnippet != null) {
@@ -55,13 +63,21 @@ void main() async {
 
     // 4. Testing Category/Related Feed
     final categorySearch = targetTitle;
-    print('4. Sourcing candidate category feed topics for similar pages to "$categorySearch"...');
+    print(
+      '4. Sourcing candidate category feed topics for similar pages to "$categorySearch"...',
+    );
     final categoryFeed = await client.fetchCategoryFeed(categorySearch);
     print('🧬 Found ${categoryFeed.length} related candidates:');
-    for (var i = 0; i < (categoryFeed.length > 3 ? 3 : categoryFeed.length); i++) {
+    for (
+      var i = 0;
+      i < (categoryFeed.length > 3 ? 3 : categoryFeed.length);
+      i++
+    ) {
       final item = categoryFeed[i];
       print('   [$i] ${item.title} (ID: ${item.id})');
-      print('       Extract: "${item.extract.substring(0, item.extract.length > 80 ? 80 : item.extract.length)}..."');
+      print(
+        '       Extract: "${item.extract.substring(0, item.extract.length > 80 ? 80 : item.extract.length)}..."',
+      );
       print('       Category Hint: ${item.categoryHint}');
     }
     print('');

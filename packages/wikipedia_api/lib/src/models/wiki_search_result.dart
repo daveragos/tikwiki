@@ -14,8 +14,9 @@ class WikiSearchResult {
   factory WikiSearchResult.fromJson(Map<String, dynamic> json) {
     final title = json['title'] as String? ?? '';
     final pageId = json['id'] as int? ?? json['pageid'] as int? ?? 0;
-    final descriptionSnippet = json['description'] as String? ?? json['excerpt'] as String?;
-    
+    final descriptionSnippet =
+        json['description'] as String? ?? json['excerpt'] as String?;
+
     String? thumbUrl;
     final thumbnailObj = json['thumbnail'];
     if (thumbnailObj is Map) {
@@ -42,10 +43,7 @@ class WikiSearchResult {
       'title': title,
       'id': pageId,
       if (descriptionSnippet != null) 'description': descriptionSnippet,
-      if (tinyThumbnailUrl != null)
-        'thumbnail': {
-          'url': tinyThumbnailUrl,
-        },
+      if (tinyThumbnailUrl != null) 'thumbnail': {'url': tinyThumbnailUrl},
     };
   }
 

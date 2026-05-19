@@ -11,10 +11,18 @@ class WikiFullContent {
     required this.mobileUrl,
   });
 
-  factory WikiFullContent.fromHtml(String htmlBody, {required String title, required String mobileUrl}) {
-    final pageIdRegExp = RegExp(r'<meta[^>]+property="mw:pageId"[^>]+content="([^"]+)"');
-    final altPageIdRegExp = RegExp(r'<meta[^>]+content="([^"]+)"[^>]+property="mw:pageId"');
-    
+  factory WikiFullContent.fromHtml(
+    String htmlBody, {
+    required String title,
+    required String mobileUrl,
+  }) {
+    final pageIdRegExp = RegExp(
+      r'<meta[^>]+property="mw:pageId"[^>]+content="([^"]+)"',
+    );
+    final altPageIdRegExp = RegExp(
+      r'<meta[^>]+content="([^"]+)"[^>]+property="mw:pageId"',
+    );
+
     var id = '';
     var match = pageIdRegExp.firstMatch(htmlBody);
     if (match != null) {

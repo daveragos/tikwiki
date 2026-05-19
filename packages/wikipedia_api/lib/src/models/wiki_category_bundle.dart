@@ -9,7 +9,8 @@ class WikiCategoryBundle {
 
   factory WikiCategoryBundle.fromJson(Map<String, dynamic> json) {
     final categoryName = json['categoryName'] as String? ?? '';
-    final associatedTitles = (json['associatedTitles'] as List?)
+    final associatedTitles =
+        (json['associatedTitles'] as List?)
             ?.map((e) => e.toString())
             .toList() ??
         <String>[];
@@ -20,10 +21,7 @@ class WikiCategoryBundle {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'categoryName': categoryName,
-      'associatedTitles': associatedTitles,
-    };
+    return {'categoryName': categoryName, 'associatedTitles': associatedTitles};
   }
 
   @override

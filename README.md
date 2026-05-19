@@ -25,11 +25,13 @@ TikWiki uses an isolated, modular local monorepo architecture to strictly decoup
 tikwiki/ (Root Workspace)
 ├── android/                   # Native Android configuration
 ├── ios/                       # Native iOS configuration
-├── lib/                       # Main Application Shell (UI, State Management, Auth)
+├── lib/                       # Main application shell
+│   ├── app.dart               # MaterialApp + router configuration
 │   ├── main.dart              # Entry point & Firebase initialization
-│   └── src/
-│       ├── auth/              # User Authentication (Firebase Auth)
-│       └── feed/              # Presentation layer (Vertical PageView, overlays, sheets)
+│   ├── core/                  # Shared DI, router, theme, error utilities
+│   └── features/
+│       ├── auth/              # Clean auth layer (data/domain/presentation)
+│       └── home/              # Signed-in landing page
 └── packages/                  # Isolated Monorepo Business & Domain Logic
     ├── wikipedia_api/         # Pure Dart package: Wikipedia API wrapper
     │   ├── lib/src/models/    # DTOs (WikiSummary, WikiFullContent, etc.)
@@ -144,12 +146,18 @@ To prevent excessive write costs during rapid scrolling, user interactions are c
 To configure, build, and run dependencies uniformly across the monorepo workspace environment, execute the following:
 
 ```bash
-# Get dependencies across the main application framework
-flutter pub get
+make setup
+make gen
+make analyze
+make test
+```
 
-# Navigate and initialize internal module references natively
-cd packages/wikipedia_api && dart pub get
-cd ../tikwiki_algo && dart pub get
+### Mason Bricks
+
+```bash
+mason get
+mason make feature --name article_feed
+mason make page --feature auth --name reset_password
 ```
 
 ### Monorepo Dependency Declaration (`pubspec.yaml`)
