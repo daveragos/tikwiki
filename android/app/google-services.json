@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "849203281312",
+    "project_id": "tikwiki",
+    "storage_bucket": "tikwiki.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849203281312:android:0665f5b6c8dfc7dd41b8c5",
+        "android_client_info": {
+          "package_name": "com.example.tikwiki"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkXvu8nIksVZ4xzVJhdRWKU8QZadz9wwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
